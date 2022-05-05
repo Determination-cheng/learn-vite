@@ -1,5 +1,6 @@
-import './index.scss'
+// import './index.scss'
+import styles from './index.module.scss'
 
 export function Header() {
-  return <p className="header">This is header</p>
+  return <p className={styles.header}>This is header</p>
 }

@@ -18,11 +18,21 @@ export default defineConfig({
 
   //* css
   css: {
+    // 预处理器
     preprocessorOptions: {
       scss: {
         // 该属性值会被每个 scss 文件的开头自动注入
         additionalData: `@import "${variablePath}";`,
       },
+    },
+
+    // CSS Modules
+    modules: {
+      // 该属性对生成的样式哈希值名称做定义
+      // [name] 表示当前文件名  [local] 表示类名
+      //   比如说 index.module.scss 下有个 header 属性
+      //   那使用该 header 的类名就会显示为: index-module__header__IdNfn
+      generateScopedName: '[name]__[local]__[hash:base64:5]',
     },
   },
 })
