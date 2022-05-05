@@ -1,4 +1,5 @@
 import { defineConfig, normalizePath } from 'vite'
+import autoprefixer from 'autoprefixer'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
@@ -33,6 +34,16 @@ export default defineConfig({
       //   比如说 index.module.scss 下有个 header 属性
       //   那使用该 header 的类名就会显示为: index-module__header__IdNfn
       generateScopedName: '[name]__[local]__[hash:base64:5]',
+    },
+
+    // PostCSS
+    postcss: {
+      plugins: [
+        autoprefixer({
+          // 指定目标浏览器
+          overrideBrowserslist: ['Chrome > 40', 'ff > 31', 'ie 11'],
+        }),
+      ],
     },
   },
 })
