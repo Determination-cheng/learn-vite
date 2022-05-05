@@ -1,0 +1,6 @@
+// 不使用全局样式的情况下要手动引入定义了变量的 scss 文件
+// @import '../../global/css/variable.scss';
+
+.header {
+  color: $theme-color;
+}
