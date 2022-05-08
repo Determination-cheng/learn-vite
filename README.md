@@ -343,11 +343,100 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
   }
   ```
 
-  
-
 
 
 ### CSS 检查
+
+**prettier**
+
+1. 安装主要依赖
+
+   ```shell
+   pnpm add -D prettier
+   ```
+
+2. 在项目根目录创建 `.prettierrc.js`
+
+   ```js
+   // .prettierrc.js
+   module.exports = {
+     printWidth: 80, //一行的字符数，如果超过会进行换行，默认为80
+     tabWidth: 2, // 一个 tab 代表几个空格数，默认为 2 个
+     useTabs: false, //是否使用 tab 进行缩进，默认为false，表示用空格进行缩减
+     singleQuote: true, // 字符串是否使用单引号，默认为 false，使用双引号
+     semi: true, // 行尾是否使用分号，默认为true
+     trailingComma: "none", // 是否使用尾逗号
+     bracketSpacing: true // 对象大括号直接是否有空格，默认为 true，效果：{ a: 1 }
+   };
+   ```
+
+3. 将 prettier 集成到现有的 ESLint 工具中
+
+   1. 安装依赖
+
+      ```shell
+      # eslint-config-prettier  用来覆盖 ESLint 本身的规则配置
+      # eslint-plugin-prettier  让 prettier 接管 `eslint --fix` ( 代码修复能力 )
+      
+      pnpm add -D eslint-config-prettier eslint-plugin-prettier
+      ```
+
+   2. 在 `eslintrc.js` 中接入 prettier 相关工具链
+
+      ```js
+      // .eslintrc.js
+      module.exports = {
+        env: {
+          browser: true,
+          es2021: true
+        },
+        extends: [
+          "eslint:recommended",
+          "plugin:react/recommended",
+          "plugin:@typescript-eslint/recommended",
+          // 1. 接入 prettier 的规则
+          "prettier",
+          "plugin:prettier/recommended"
+        ],
+        parser: "@typescript-eslint/parser",
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true
+          },
+          ecmaVersion: "latest",
+          sourceType: "module"
+        },
+        // 2. 加入 prettier 的 eslint 插件
+        plugins: ["react", "@typescript-eslint", "prettier"],
+        rules: {
+          // 3. 注意要加上这一句，开启 prettier 自动修复的功能
+          "prettier/prettier": "error",
+          quotes: ["error", "single"],
+          semi: ["error", "always"],
+          "react/react-in-jsx-scope": "off"
+        }
+      }
+      ```
+
+4. 通过命令行检查并修复
+   `package.json`
+
+   ```json
+   {
+     "scripts": {
+       // 省略已有 script
+       "lint:script": "eslint --ext .js,.jsx,.ts,.tsx --fix --quiet ./",
+     }
+   }
+   ```
+
+   在终端执行命令
+
+   ```shell
+   pnpm run lint:script
+   ```
+
+5. 也可以在 IDE 设置"保存时格式化"
 
 
 
