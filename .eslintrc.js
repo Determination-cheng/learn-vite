@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     // 'no-cond-assign': ['error', 'always'],
     // '@typescript-eslint/ban-ts-comment': 'error',
     // '@typescript-eslint/no-explicit-any': 'warn',

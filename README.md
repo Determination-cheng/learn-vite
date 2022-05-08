@@ -564,9 +564,109 @@ import viteESLint from 'vite-plugin-eslint'
 
 ### 提交前检查
 
+**Git 提交工作流: Husky + lint-staged**
+
+1. 安装依赖
+
+   ```shell
+   pnpm add -D husky
+   ```
+
+2. 在 `package.json` 中配置 `husky` 启动脚本
+
+   ```json
+   {
+     "scripts": {
+       // 会在安装 npm 依赖后自动执行
+       "postinstall": "husky install"
+     }
+   }
+   ```
+
+3. 通过终端添加 Husky 钩子
+
+   ```shell
+   npx husky add .husky/pre-commit "npm run lint"
+   ```
+
+   如果报错了，先重新安装一下依赖 `pnpm i`
+
+   
+
+**优化: 增量检查**
+
+1. 安装依赖
+
+   ```shell
+   pnpm add -D lint-staged
+   ```
+
+2. 配置 `package.json`
+
+   ```json
+   {
+     "lint-staged": {
+       "**/*.{js,jsx,tsx,ts}": [
+         "npm run lint:script",
+         "git add ."
+       ]
+     },
+     "**/*.{scss}": [
+       "npm run lint:style",
+       git add .
+     ]
+   }
+   ```
+
+3. 修改 `.husky/pre-commit` 脚本
+
+   ```shell
+   #!/bin/sh
+   . "$(dirname "$0")/_/husky.sh"
+   
+   # npm run lint
+   npx --no -- lint-staged
+   ```
 
 
 
+**规范 commit 信息**
 
+1. 安装依赖
 
+   ```shell
+   pnpm i commitlint @commitlint/cli @commitlint/config-conventional -D
+   ```
 
+2. 在项目根目录创建 `.commitlintrc.js`，并作如下编辑
+
+   ```js
+   module.exports = {
+     extends: ["@commitlint/config-conventional"]
+   }
+   ```
+
+   ```
+   提交信息
+   type: 提交类型
+   subject: 提交的摘要信息
+   
+   <type>: <subject>
+   
+   type:
+   	feat: 添加新功能
+   	fix: 修复 Bug
+   	chore: 一些不影响功能的修改( 删除无用代码、注释等 )
+   	docs: 文档的修改
+   	perf: 性能优化
+   	refactor: 代码重构
+   	test: 添加测试代码
+   ```
+
+3. 将 `commitlint` 的功能集成到 `Husky` 钩子中
+
+   ```shell
+   npx husky add .husky/commit-msg "npx --no-install commitlint -e $HUSKY_GIT_PARAMS"
+   ```
+
+   
