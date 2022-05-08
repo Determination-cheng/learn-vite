@@ -22,11 +22,14 @@ module.exports = {
   plugins: ['prettier', 'react', '@typescript-eslint'],
   rules: {
     'prettier/prettier': 'error',
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
     'react/react-in-jsx-scope': 'off',
     // 'no-cond-assign': ['error', 'always'],
     // '@typescript-eslint/ban-ts-comment': 'error',
     // '@typescript-eslint/no-explicit-any': 'warn',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 }

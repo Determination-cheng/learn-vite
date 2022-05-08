@@ -207,7 +207,7 @@ export default defineConfig({
 
 ### JS/TS 检查
 
-**ESLint**
+#### **ESLint**
 
 准备工作
 
@@ -240,6 +240,8 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
     * jsx
 
 * rules
+
+  * !!! 如果使用了 prettier，最好只配置 prettierrc，否则对同一个配置不同的选项一直报错
 
   * { [key in string]: [string | number, string] }
 
@@ -343,11 +345,41 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
   }
   ```
 
+如果有报关于 React 版本错误的，`.eslintrc.js` 添加以下配置
+
+```js
+{
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+}
+```
 
 
-### CSS 检查
 
-**prettier**
+在 vite 中接入接入 ESLint
+
+```shell
+pnpm add -D vite-plugin-eslint
+```
+
+`vite.config.ts`
+
+```ts
+import viteESLint from 'vite-plugin-eslint'
+
+{
+  plugins: [viteESLint()]
+}
+```
+
+接着，只要启动项目就能实时检查 `pnpm run dev`
+
+
+
+#### **prettier**
 
 1. 安装主要依赖
 
@@ -358,16 +390,15 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
 2. 在项目根目录创建 `.prettierrc.js`
 
    ```js
-   // .prettierrc.js
    module.exports = {
      printWidth: 80, //一行的字符数，如果超过会进行换行，默认为80
      tabWidth: 2, // 一个 tab 代表几个空格数，默认为 2 个
      useTabs: false, //是否使用 tab 进行缩进，默认为false，表示用空格进行缩减
      singleQuote: true, // 字符串是否使用单引号，默认为 false，使用双引号
-     semi: true, // 行尾是否使用分号，默认为true
-     trailingComma: "none", // 是否使用尾逗号
-     bracketSpacing: true // 对象大括号直接是否有空格，默认为 true，效果：{ a: 1 }
-   };
+     semi: false, // 行尾是否使用分号，默认为true
+     trailingComma: 'all', // 是否使用尾逗号
+     bracketSpacing: true, // 对象大括号直接是否有空格，默认为 true，效果：{ a: 1 }
+   }
    ```
 
 3. 将 prettier 集成到现有的 ESLint 工具中
@@ -382,6 +413,7 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
       ```
 
    2. 在 `eslintrc.js` 中接入 prettier 相关工具链
+      https://prettier.io/docs/en/options.html
 
       ```js
       // .eslintrc.js
@@ -411,9 +443,11 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
         rules: {
           // 3. 注意要加上这一句，开启 prettier 自动修复的功能
           "prettier/prettier": "error",
-          quotes: ["error", "single"],
-          semi: ["error", "always"],
-          "react/react-in-jsx-scope": "off"
+          "react/react-in-jsx-scope": "off"，
+          // 注意这里最好不要写规则，规则都统一放在 prettierrc
+          // 否则可能会冲突
+          // quotes: ["error", "single"],
+          // semi: ["error", "always"],
         }
       }
       ```
@@ -437,6 +471,10 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
    ```
 
 5. 也可以在 IDE 设置"保存时格式化"
+
+
+
+### CSS 检查
 
 
 
