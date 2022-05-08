@@ -2,6 +2,7 @@ import { defineConfig, normalizePath } from 'vite'
 import autoprefixer from 'autoprefixer'
 import react from '@vitejs/plugin-react'
 import viteESLint from 'vite-plugin-eslint'
+import viteStylelint from '@amatlash/vite-plugin-stylelint'
 import path from 'path'
 
 // 全局 scss 文件
@@ -16,7 +17,11 @@ export default defineConfig({
   // root: path.join(__dirname, 'src'),
 
   //* 插件
-  plugins: [react(), viteESLint()],
+  plugins: [
+    react(),
+    viteESLint(),
+    viteStylelint({ exclude: /windicss|node_modules/ }),
+  ],
 
   //* css
   css: {

@@ -476,6 +476,90 @@ import viteESLint from 'vite-plugin-eslint'
 
 ### CSS 检查
 
+**Stylelint**
+
+1. 安装依赖
+
+   ```shell
+   pnpm add -D stylelint stylelint-prettier stylelint-config-prettier stylelint-config-recess-order stylelint-config-standard stylelint-config-standard-scss
+   ```
+
+2. 在根目录创建 `.stylelintrc.js` 并作如下配置
+
+   ```js
+   module.exports = {
+     // 注册 stylelint 的 prettier 插件
+     plugins: ['stylelint-prettier'],
+     // 继承一系列规则集合
+     extends: [
+       // standard 规则集合
+       'stylelint-config-standard',
+       // standard 规则集合的 scss 版本
+       'stylelint-config-standard-scss',
+       // 样式属性顺序规则
+       'stylelint-config-recess-order',
+       // 接入 Prettier 规则
+       'stylelint-config-prettier',
+       'stylelint-prettier/recommended'
+     ],
+     // 配置 rules
+     rules: {
+       // 开启 Prettier 自动格式化功能
+       'prettier/prettier': true
+     }
+   };
+   ```
+
+3. 在 `package.json ` 中添加相关命令
+
+   ```json
+   {
+     "scripts": {
+       // 整合 lint 命令
+       "lint": "npm run lint:script && npm run lint:style",
+       // stylelint 命令
+       "lint:style": "stylelint --fix \"src/**/*.{css.scss}\""
+     }
+   }
+   ```
+
+   执行 `pnpm run lint:style` 即可完成对样式代码的检查和格式化
+
+
+
+对 `rules` 的配置
+
+* null 表示关闭规则
+* 通过简单值开启规则 ( 根据规则的不同而不同，可以是布尔值或字符串 )
+* 数组 `[简单值, 自定义配置]`
+
+
+
+在 vite 中使用
+
+1. 安装依赖
+
+   ```shell
+   pnpm add -D @amatlash/vite-plugin-stylelint
+   ```
+
+2. 在 vite 中引入配置
+
+   ```ts
+   import viteStylelint from '@amatlash/vite-plugin-stylelint'
+   
+   {
+     plugins: [
+       // 省略其他插件
+       viteStylelint({
+         exclude: /windicss|node_modules/
+       })
+     ]
+   }
+   ```
+
+   然后启动项目就能在终端看到项目所有问题  `pnpm run dev`
+
 
 
 ### 提交前检查
