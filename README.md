@@ -736,3 +736,47 @@ export function Header() {
 
 
 
+### SVG
+
+1. 安装相关插件
+
+   ```shell
+   pnpm add -D vite-plugin-svgr
+   ```
+
+   * React  `vite-plugin-svgr`
+   * Vue3 `vite-svg-loader`
+   * Vue2 `vite-plugin-vue2-svg`
+
+2. 在 `vite.config.ts` 中使用插件
+
+   ```ts
+   import svgr from 'vite-plugin-svgr'
+   
+   {
+     plugins: [svgr()]
+   }
+   ```
+
+3. 在 `tsconfig.json` 添加以下配置防止类型报错
+
+   ```json
+   {
+     "compilerOptions": {
+       "types": ["vite-plugin-svgr/client"]
+     }
+   }
+   ```
+
+4. 在组件中使用 SVG 组件
+
+   ```react
+   import { ReactComponent as Logo } from '@assets/icons/logo.svg'
+   
+   export function Header() {
+     return <Logo />
+   }
+   ```
+
+   
+
