@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import styles from './index.module.scss'
 import logo from '@assets/imgs/vite.png'
+import { ReactComponent as ReactLogo } from '@assets/icons/logo.svg'
 
 export function Header() {
   useEffect(() => {
@@ -18,6 +19,12 @@ export function Header() {
         <img src={logo} alt="" />
         {/* 引入图片方式2 */}
         <img id="logo" alt="" />
+      </div>
+
+      <div>
+        {/* SVG */}
+        <h2>SVG</h2>
+        <ReactLogo style={{ width: 50 }} />
       </div>
     </div>
   )

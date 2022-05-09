@@ -1,9 +1,14 @@
 import { defineConfig, normalizePath } from 'vite'
-import autoprefixer from 'autoprefixer'
+import path from 'path'
+// React 项目必须
 import react from '@vitejs/plugin-react'
+// postcss 插件
+import autoprefixer from 'autoprefixer'
+// 代码检查与格式化
 import viteESLint from 'vite-plugin-eslint'
 import viteStylelint from '@amatlash/vite-plugin-stylelint'
-import path from 'path'
+// SVG
+import svgr from 'vite-plugin-svgr'
 
 // 全局 scss 文件
 // 使用 normalizePath 解决 window 下的路径问题
@@ -21,6 +26,7 @@ export default defineConfig({
     react(),
     viteESLint(),
     viteStylelint({ exclude: /windicss|node_modules/ }),
+    svgr(),
   ],
 
   //* css
