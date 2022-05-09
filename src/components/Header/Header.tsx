@@ -8,7 +8,17 @@ import { ReactComponent as ReactLogo } from '@assets/icons/logo.svg'
 import { version } from '../../../package.json'
 // web worker
 import Worker from './example.js?worker'
+// wasm
+import init from '@assets/wasm/fib.wasm'
 
+//* wasm
+type FibFunc = (num: number) => number
+init({}).then(exports => {
+  const fibFunc = exports.fib as FibFunc
+  console.log('fib result:', fibFunc(10))
+})
+
+//* web worker
 // 1.初始化 worker 实例
 const worker = new Worker()
 // 2.主线程监听 worker 信息
