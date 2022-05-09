@@ -867,3 +867,33 @@ import { version } from '../../../package.json'
    ```
 
    
+
+### 其他静态资源
+
+* **媒体类**
+  * mp4
+  * webm
+  * ogg
+  * mp3
+  * wav
+  * flac
+  * aac
+* **字体类**
+  * woff
+  * woff2
+  * eot
+  * ttf
+  * otf
+* **文本类**
+  * webmanifest
+  * pdf
+  * txt
+
+直接在 `vite.config.ts` 中配置
+
+```ts
+{
+  assetsInclude: ['.gltf']
+}
+```
+
