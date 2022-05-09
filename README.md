@@ -799,3 +799,36 @@ import { version } from '../../../package.json'
 ```
 
 这样 JSON 就失去了按名导入的能力，就不能像上述引入 JSON 方式使用。
+
+
+
+### Web Worker
+
+1. 新建一个 worker 文件
+
+   ```js
+   const start = () => {
+     let count = 0
+     setInterval(() => {
+       // 给主线程传值
+       postMessage(++count)
+     }, 2000)
+   }
+   
+   start()
+   ```
+
+2. 在组件中引入，要注意在引入路径后加上 `?worker` 以告诉 vite 这是个 web worker 脚本文件
+
+   ```react
+   import Worker from './example.js?worker'
+   
+   // 1.初始化 Worker 实例
+   const worker = new Worker()
+   // 2.主线程监听 worker 信息
+   worker.addEventListener('message', e => {
+     console.log(e)
+   })
+   ```
+
+   
