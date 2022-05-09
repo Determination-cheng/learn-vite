@@ -831,4 +831,39 @@ import { version } from '../../../package.json'
    })
    ```
 
+
+
+### wasm
+
+1. 定义一个 wasm，其对应的 JS 源码如下
+
+   ```js
+   export function fib(n) {
+     var a = 0,
+       b = 1;
+     if (n > 0) {
+       while (--n) {
+         let t = a + b;
+         a = b;
+         b = t;
+       }
+       return b;
+     }
+     return a;
+   }
+   ```
+
+2. 直接在组件中导入使用
+
+   ```react
+   import init from './fib.wasm'
+   
+   type FibFunc = (num: number) => number
+   
+   init({}).then((exports) => {
+     const fibFunc = exports.fib as FibFunc
+     console.log('Fib result:', fibFunc(10))
+   })
+   ```
+
    
