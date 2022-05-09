@@ -241,7 +241,7 @@ pnpm add -D eslint-plugin-react@latest @typescript-eslint/eslint-plugin@latest @
 
 * rules
 
-  * !!! 如果使用了 prettier，最好只配置 prettierrc，否则对同一个配置不同的选项一直报错
+  * **!!! 如果使用了 prettier，最好只配置 prettierrc，否则对同一个配置不同的选项一直报错**
 
   * { [key in string]: [string | number, string] }
 
