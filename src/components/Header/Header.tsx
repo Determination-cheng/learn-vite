@@ -1,8 +1,20 @@
 import { useEffect } from 'react'
 import styles from './index.module.scss'
+// img
 import logo from '@assets/imgs/vite.png'
+// svg
 import { ReactComponent as ReactLogo } from '@assets/icons/logo.svg'
+// json
 import { version } from '../../../package.json'
+// web worker
+import Worker from './example.js?worker'
+
+// 1.初始化 worker 实例
+const worker = new Worker()
+// 2.主线程监听 worker 信息
+worker.addEventListener('message', e => {
+  console.log(e)
+})
 
 export function Header() {
   useEffect(() => {
