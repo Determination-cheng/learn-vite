@@ -780,3 +780,22 @@ export function Header() {
 
    
 
+### JSON
+
+**直接引入就能使用**
+
+```react
+import { version } from '../../../package.json'
+```
+
+**在数据量较大时可在 `vite.config.ts` 中作以下配置**
+
+```ts
+{
+  json: {
+    stringify: true
+  }
+}
+```
+
+这样 JSON 就失去了按名导入的能力，就不能像上述引入 JSON 方式使用。

@@ -68,6 +68,7 @@ export default defineConfig({
 
   //* json
   json: {
+    // 使 JSON 失去按名导入能力，在数据量较大时可优化
     stringify: false,
   },
 })
