@@ -65,4 +65,9 @@ export default defineConfig({
       '@assets': path.join(__dirname, 'src/assets'),
     },
   },
+
+  //* json
+  json: {
+    stringify: false,
+  },
 })

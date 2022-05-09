@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import styles from './index.module.scss'
 import logo from '@assets/imgs/vite.png'
 import { ReactComponent as ReactLogo } from '@assets/icons/logo.svg'
+import { version } from '../../../package.json'
 
 export function Header() {
   useEffect(() => {
@@ -25,6 +26,11 @@ export function Header() {
         {/* SVG */}
         <h2>SVG</h2>
         <ReactLogo style={{ width: 50 }} />
+      </div>
+
+      <div>
+        <h2>JSON</h2>
+        <span>{version}</span>
       </div>
     </div>
   )
