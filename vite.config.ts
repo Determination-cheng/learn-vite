@@ -52,4 +52,11 @@ export default defineConfig({
       ],
     },
   },
+
+  //* 别名
+  resolve: {
+    alias: {
+      '@assets': path.join(__dirname, 'src/assets'),
+    },
+  },
 })
