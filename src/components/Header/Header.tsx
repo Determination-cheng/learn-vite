@@ -42,6 +42,10 @@ export function Header() {
         <img src={logo} alt="" />
         {/* 引入图片方式2 */}
         <img id="logo" alt="" />
+        {/* 使用另外存储服务的图片 */}
+        <img
+          src={new URL('./logo.png', import.meta.env.VITE_IMG_BASE_URL).href}
+        />
       </div>
 
       <div>

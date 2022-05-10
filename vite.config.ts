@@ -16,10 +16,18 @@ const variablePath = normalizePath(
   path.resolve('./src/global/css/variable.scss'),
 )
 
+// 判断是否为生产环境
+const isProduction = process.env.NODE_ENV === 'production'
+// 项目 CDN 域名
+const CDN_URL = 'https://HH'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   //* 指定入口文件在 src，这时 vite 会主动找 src 下的 index.html
   // root: path.join(__dirname, 'src'),
+
+  //* 自定义域名部署
+  base: isProduction ? CDN_URL : '/',
 
   //* 插件
   plugins: [
