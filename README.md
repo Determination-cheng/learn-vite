@@ -907,3 +907,71 @@ import { version } from '../../../package.json'
   只获取资源的字符串内容
 * `?inline`
   资源强制内联而不是打包成单独文件
+
+
+
+### 生产环境处理
+
+#### 自定义部署域名
+
+1. 在根目录新建文件 `.env.development`
+
+   ```
+   NODE.ENV=development
+   ```
+
+2. 在根目录新建文件 `.env.production`
+
+   ```
+   NODE_ENV=production
+   ```
+
+3. 编辑 `vite.config.ts`
+
+   ```ts
+   // 判断是否为生产环境
+   const isProduction = process.env.NODE_ENV === 'production'
+   // 填入项目的 CDN 域名地址
+   const CDN_URL = 'xxx'
+   
+   {
+     base: isProduction ? CDN_URL : '/'
+   }
+   ```
+
+这时执行 `pnpm run build` 可以发现静态资源已经加上 CDN 前缀
+
+**如果需要另外的存储地址**
+
+1. 在项目根目录新增文件 `.env`
+
+   ```
+   // 开发环境优先级: .env.development > .env
+   // 生产环境优先级: .env.production > .env
+   VITE_IMG_BASE_URL=https://my-image-cdn.com
+   ```
+
+2. 在 `src/vite.env.d.ts` 增加类型声明
+
+   ```ts
+   /// <reference types="vite/client" />
+   
+   interface ImportMetaEnv {
+     readonly VITE_APP_TITLE: string
+     // 自定义环境变量
+     readonly VITE_IMG_BASE_URL: string
+   }
+   
+   interface ImportMeta {
+     readonly env:ImportMetaEnv
+   }
+   ```
+
+3. 在组件中使用
+
+   ```react
+   <img src={new URL('./logo.png', import.meta.env.VITE_IMG_BASE_URL).href} />
+   ```
+
+   
+
